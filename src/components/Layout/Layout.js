@@ -7,8 +7,10 @@ import classes from './Layout.css';
 
 const layout = (props) => (
     <Aux>
-        <div> Toolbar, SideDrawer </div>
-        <main  className={classes.Content}>{props.children} </main>
+        <div> Toolbar, SideDrawer, lol</div>
+        <main className={classes.Content}>
+            {props.children} 
+            </main>
     </Aux>
 );
 
