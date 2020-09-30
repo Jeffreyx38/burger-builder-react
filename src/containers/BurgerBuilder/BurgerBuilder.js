@@ -13,7 +13,7 @@ const INGREDIENT_PRICES = {
 class BurgerBuilder extends Component {
 
     state = {
-        ingredients:{
+        ingredients: {
             salad: 0,
             bacon: 0,
             cheese: 0,
@@ -21,7 +21,7 @@ class BurgerBuilder extends Component {
         },
         totalPrice: 4
     }
-    
+
     addIngredientHandler = (type) => {
         const oldCount = this.state.ingredients[type];
         const updatedCount = oldCount + 1;
@@ -33,18 +33,45 @@ class BurgerBuilder extends Component {
         const priceAddition = INGREDIENT_PRICES[type];
         const oldPrice = this.state.totalPrice;
         const newPrice = oldPrice + priceAddition;
-        this.setState({totalPrice: newPrice, ingredients: updatedIngredients})
+        this.setState({ totalPrice: newPrice, ingredients: updatedIngredients })
 
     }
 
-    removeIngredientHandler = (type) =>{
-        
+    removeIngredientHandler = (type) => {
+        const oldCount = this.state.ingredients[type];
+        if (oldCount <= 0) {
+            return;
+        }
+        const updatedCount = oldCount - 1;
+        const updatedIngredients = {
+            ...this.state.ingredients
+
+        };
+        updatedIngredients[type] = updatedCount;
+        const priceAddition = INGREDIENT_PRICES[type];
+        const oldPrice = this.state.totalPrice;
+        const newPrice = oldPrice - priceAddition;
+        this.setState({ totalPrice: newPrice, ingredients: updatedIngredients })
+
     }
-    render () {
-        return(
+    render() {
+
+        const disableInfo = {
+            ...this.state.ingredients
+        };
+
+        for (let key in disableInfo) {
+            console.log(key)
+            disableInfo[key] = disableInfo[key] <= 0;
+        }
+
+        return (
             <Aux>
-                <Burger ingredients={this.state.ingredients}/>
-                <BuildControls ingredientAdded={this.addIngredientHandler}/>
+                <Burger ingredients={this.state.ingredients} />
+                <BuildControls
+                    ingredientAdded={this.addIngredientHandler}
+                    ingredientRemoved={this.removeIngredientHandler}
+                    disabled={disableInfo} />
             </Aux>
         );
     }
