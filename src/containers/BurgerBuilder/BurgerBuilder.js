@@ -1,34 +1,28 @@
 import React, { Component } from 'react';
 import Aux from '../../hoc/Aux'
-
+import axios from '../../axios-orders'
 import Burger from '../../components/Burger/Burger'
 import BuildControls from '../../components/Burger/BuildControls/BuildControls'
 import Modal from '../../components/UI/Modal/Modal'
-import axios from '../../axios-orders'
+
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary'
 import Spinner from '../../components/UI/Spinner/Spinner'
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
 
 import { connect } from 'react-redux';
-import * as actionTypes from '../../store/actions';
 
 import * as burgerBuilderActions from '../../store/actions/index'
 class BurgerBuilder extends Component {
 
     state = {
-        purchasing: false,
-        loading: false,
-        error: false
+        purchasing: false
     }
 
     componentDidMount() {
         console.log(this.props)
-        axios.get('https://burgerbuilder-817b9.firebaseio.com/ingredients.json')
-            .then(response => {
-                this.setState({ ingredients: response.data })
-            })
-            .catch(error => { this.setState({ error: true }) })
+
     }
+
     updatedPurchaseState(ingredients) {
 
         const sum = Object.keys(ingredients)
@@ -89,9 +83,7 @@ class BurgerBuilder extends Component {
                 purchaseContinued={this.purchaseContinueHandler} />;
 
         }
-        if (this.state.loading) {
-            orderSummary = <Spinner />
-        }
+
         return (
             <Aux>
                 <Modal show={this.state.purchasing} modalClosed={this.purchaseCancelHandler}>
