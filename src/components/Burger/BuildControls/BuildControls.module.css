@@ -1,6 +1,6 @@
 .BuildControls{
     width: 100%;
-    background-color: #CF8F2E;
+    background-color: #DDBEA9;
     display: flex;
     flex-flow: column;
     align-items: center;
@@ -11,7 +11,7 @@
 
 
 .OrderButton {
-    background-color: #DAD735;
+    background-color: #F0EFEB;
     outline: none;
     cursor: pointer;
     border: 1px solid #966909;
